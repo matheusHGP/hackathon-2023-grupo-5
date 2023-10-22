@@ -1,0 +1,96 @@
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faGear } from '@fortawesome/free-solid-svg-icons/faGear'
+import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons/faCirclePlus'
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Home from '../../views/home'
+import New from '../../views/new'
+import Settings from '../../views/settings'
+import { Box } from "native-base";
+
+const Tab = createBottomTabNavigator();
+
+export default function BottomBar() {
+    const insets = useSafeAreaInsets()
+
+    const tabBarIconStyle = {
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // alignContent: 'center',
+        // backgroundColor: 'white',
+        // flex: 1,
+        // paddingBottom: 0
+    }
+    const tabBarStyle = {
+        position: 'absolute',
+        bottom: insets.bottom,
+        left: 20,
+        right: 20,
+        backgroundColor: 'green',
+        alignContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+        paddingBottom: 0,
+        height: 70,
+    }
+
+    const screenOptions = {
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarStyle,
+        tabBarIconStyle
+    }
+
+    const IconTab = ({ focused }) => {
+        <Box bgColor="white" borderRadius="full" width={5}>
+            <FontAwesomeIcon
+                color={focused ? "green" : "#c2c2c2"}
+                icon={faGear}
+                size={27}
+            />
+        </Box>
+    }
+
+    return <Tab.Navigator
+        screenOptions={screenOptions}>
+        <Tab.Screen
+            name="settings"
+            component={Settings}
+            tabBarLabel="Settings"
+            options={{
+                tabBarIcon: ({ focused }) => <IconTab focused={focused} />,
+                tabBarButton: ({focused}) => <Box bgColor="white">
+                <FontAwesomeIcon
+                    color={focused ? "green" : "#c2c2c2"}
+                    icon={faGear}
+                    size={27}
+                />
+            </Box>
+            }}
+        />
+        <Tab.Screen
+            name="new"
+            component={New}
+            tabBarLabel="New"
+            options={{
+                tabBarIcon: ({ focused }) => <FontAwesomeIcon
+                    color={focused ? "green" : "#c2c2c2"}
+                    icon={faCirclePlus}
+                    size={27}
+                />
+            }} />
+        <Tab.Screen
+            name="home"
+            component={Home}
+            tabBarLabel="Home"
+            options={{
+                tabBarIcon: ({ focused }) => <FontAwesomeIcon
+                    color={focused ? "green" : "#c2c2c2"}
+                    icon={faUser}
+                    size={27}
+                />
+            }} />
+    </Tab.Navigator>
+}
